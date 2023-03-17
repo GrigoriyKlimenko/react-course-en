@@ -2,6 +2,6 @@ import React from 'react';
 
 export class Error extends React.Component {
   render() {
-    return <>Error</>;
+    return <h1>Error</h1>;
   }
 }
