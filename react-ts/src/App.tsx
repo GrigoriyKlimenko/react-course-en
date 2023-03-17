@@ -1,5 +1,5 @@
 import React from 'react';
-import { CommonPage } from '@components/CommonPage';
+import { CommonPage } from '@pages/CommonPage';
 
 class App extends React.Component {
   render() {
