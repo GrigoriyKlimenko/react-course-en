@@ -19,12 +19,8 @@ export class Home extends React.Component {
     return (
       <>
         <h1>Home</h1>
-        <section>
-          <SearchBar />
-        </section>
-        <section>
-          <CardsContainer cards={CARDS_MOCK} />
-        </section>
+        <SearchBar />
+        <CardsContainer cards={CARDS_MOCK} />
       </>
     );
   }

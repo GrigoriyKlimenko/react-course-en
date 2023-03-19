@@ -13,8 +13,7 @@ export class SearchBar extends React.Component {
   };
 
   componentWillUnmount = () => {
-    const state = this.state.searchText;
-    localStorage.setItem('searchText', state);
+    localStorage.setItem('searchText', this.state.searchText);
   };
 
   render() {
