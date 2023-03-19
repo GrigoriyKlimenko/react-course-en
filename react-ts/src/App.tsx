@@ -1,8 +1,9 @@
 import React from 'react';
+import { CommonPage } from '@pages/CommonPage';
 
 class App extends React.Component {
   render() {
-    return <div>React RS course [EN]</div>;
+    return <CommonPage />;
   }
 }
 
