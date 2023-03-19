@@ -8,14 +8,15 @@ type CardProps = {
 
 export class Card extends React.Component<CardProps> {
   render() {
-    const { title, image } = this.props.data;
+    const { title, image, views, city, date } = this.props.data;
     return (
       <div className="cardWrapper">
         <div className="card">
-          <div>
-            <img src={image} alt="avatar" />
-          </div>
+          <img src={image} alt="avatar" />
           <div>Title: {title}</div>
+          <div>Date: {date}</div>
+          <div>City: {city}</div>
+          <div>Views: {views}</div>
         </div>
       </div>
     );

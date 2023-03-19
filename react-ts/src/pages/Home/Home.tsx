@@ -8,6 +8,9 @@ const CARDS_MOCK = new Array(10).fill('').map((_, idx) => {
     id: 'id' + idx,
     title: 'Some title',
     image: image,
+    views: 34567,
+    city: 'Vitebsk',
+    date: '20-03-2023',
   };
 });
 

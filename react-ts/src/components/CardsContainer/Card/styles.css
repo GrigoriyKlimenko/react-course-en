@@ -6,10 +6,17 @@
 
 .card {
     width: 250px;
-    height: 500px;
+    height: 400px;
+    cursor: pointer;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     border-radius: 5px;
+}
+
+.card > div {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 5px 10px;
 }
 
 .card:hover {
