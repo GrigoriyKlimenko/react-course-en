@@ -10,7 +10,7 @@ export class Card extends React.Component<CardProps> {
   render() {
     const { title, image, views, city, date } = this.props.data;
     return (
-      <div className="cardWrapper">
+      <div data-testid="card" className="cardWrapper">
         <div className="card">
           <img src={image} alt="avatar" />
           <div>Title: {title}</div>
