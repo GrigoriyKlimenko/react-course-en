@@ -10,14 +10,14 @@ export class Card extends React.Component<CardProps> {
   render() {
     const { title, image } = this.props.data;
     return (
-<div className="cardWrapper">
-  <div className="card">
-    <div>
-      <img src={image} />
-    </div>
-    <div>Title: {title}</div>
-  </div>
-</div>
+      <div className="cardWrapper">
+        <div className="card">
+          <div>
+            <img src={image} alt="avatar" />
+          </div>
+          <div>Title: {title}</div>
+        </div>
+      </div>
     );
   }
 }
