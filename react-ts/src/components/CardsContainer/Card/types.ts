@@ -1,8 +1,9 @@
 export type CardType = {
   id: string;
-  title: string;
+  name: string;
   image: string;
-  views: number;
+  gender: string;
   city: string;
+  raceClasses: string[];
   date: string;
 };

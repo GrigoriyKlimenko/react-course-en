@@ -6,11 +6,12 @@ import image from '@assets/no-image.jpg';
 const CARDS_MOCK = new Array(10).fill('').map((_, idx) => {
   return {
     id: 'id' + idx,
-    title: 'Some title',
     image: image,
-    views: 34567,
-    city: 'Vitebsk',
-    date: '20-03-2023',
+    name: 'Michael Schumacher',
+    gender: 'male',
+    city: 'Hürth',
+    date: '03-01-1969',
+    raceClasses: ['RWD', 'Pro'],
   };
 });
 

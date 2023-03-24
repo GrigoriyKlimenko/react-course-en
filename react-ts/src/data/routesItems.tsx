@@ -1,12 +1,19 @@
-import { Home } from '@pages/Home';
 import { AboutUs } from '@pages/AboutUs';
 import { Error } from '@pages/Error';
+import { Home } from '@pages/Home';
+import { Registration } from '@pages/Registration';
 
 export const ROUTES_ITEMS = [
   {
     title: 'Home',
     path: '/',
     component: <Home />,
+    displayInMenu: true,
+  },
+  {
+    title: 'Registration',
+    path: '/registration',
+    component: <Registration />,
     displayInMenu: true,
   },
   {
