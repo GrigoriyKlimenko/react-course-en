@@ -8,7 +8,7 @@ type CardProps = {
 
 export class Card extends React.Component<CardProps> {
   render() {
-    const { name, image, date, gender, raceClasses, city } = this.props.data;
+    const { name, image, date, gender, raceClass, city } = this.props.data;
     return (
       <div data-testid="card" className="cardWrapper">
         <div className="card">
@@ -17,7 +17,7 @@ export class Card extends React.Component<CardProps> {
           <div>City: {city}</div>
           <div>Date of birth: {date}</div>
           <div>Gender: {gender}</div>
-          <div>Race classes: {raceClasses.join(', ')}</div>
+          <div>Race classes: {raceClass}</div>
         </div>
       </div>
     );

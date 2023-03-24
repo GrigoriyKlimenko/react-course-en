@@ -1,0 +1,15 @@
+.formContainer {
+    max-width: 600px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+
+input[type="text"],
+input[type="date"] {
+    box-sizing: border-box;
+    height: 30px;
+}

@@ -4,6 +4,6 @@ export type CardType = {
   image: string;
   gender: string;
   city: string;
-  raceClasses: string[];
+  raceClass: string;
   date: string;
 };
