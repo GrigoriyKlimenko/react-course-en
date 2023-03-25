@@ -14,17 +14,19 @@ export class Registration extends React.Component<unknown, StateProps> {
   };
 
   addCard = (card: CardType) => {
-    console.log(card);
     this.setState((prevState) => ({ cards: [...prevState.cards, card] }));
   };
 
   render() {
     return (
-      <div className="registrationContainer">
+      <>
         <h1>Participants registration of the &quot;Race days&quot; event</h1>
-        <Form addCard={this.addCard} />
-        <CardsContainer cards={this.state.cards} />
-      </div>
+        <div className="registrationContainer">
+          <Form addCard={this.addCard} />
+          {this.state.cards.length > 0 && <h2>Submitted cards:</h2>}
+          <CardsContainer cards={this.state.cards} />
+        </div>
+      </>
     );
   }
 }

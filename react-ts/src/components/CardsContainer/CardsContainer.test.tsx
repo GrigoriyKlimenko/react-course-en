@@ -5,12 +5,13 @@ import { CardsContainer } from './CardsContainer';
 import image from '@assets/no-image.jpg';
 
 const TEST_DATA = {
-  id: 'id0',
-  title: 'Some test title',
-  image: image,
-  views: 100500,
+  id: 'id12',
+  name: 'Firstname Lastname',
+  gender: 'male',
   city: 'Silent',
-  date: '20-03-1909',
+  image: image,
+  raceClass: 'Drag racing',
+  date: '1999-02-16',
 };
 
 const TEST_DATA_ARRAY = new Array(10).fill('').map((_, idx) => {

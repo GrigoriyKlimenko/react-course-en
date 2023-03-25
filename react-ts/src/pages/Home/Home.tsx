@@ -11,7 +11,7 @@ const CARDS_MOCK = new Array(10).fill('').map((_, idx) => {
     gender: 'male',
     city: 'Hürth',
     date: '03-01-1969',
-    raceClasses: 'Pro',
+    raceClass: 'Pro',
   };
 });
 

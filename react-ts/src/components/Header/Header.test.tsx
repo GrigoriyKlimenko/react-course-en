@@ -16,7 +16,7 @@ describe('Header component', () => {
         level: 3,
       })
     ).toHaveTextContent('Home');
-    expect(screen.getAllByRole('link')).toHaveLength(2);
+    expect(screen.getAllByRole('link')).toHaveLength(3);
   });
   it('Renders header component for About us page', () => {
     render(
@@ -29,7 +29,7 @@ describe('Header component', () => {
         level: 3,
       })
     ).toHaveTextContent('About us');
-    expect(screen.getAllByRole('link')).toHaveLength(2);
+    expect(screen.getAllByRole('link')).toHaveLength(3);
   });
   it('Renders header component for Error page', () => {
     render(
@@ -42,6 +42,6 @@ describe('Header component', () => {
         level: 3,
       })
     ).toHaveTextContent('Error');
-    expect(screen.getAllByRole('link')).toHaveLength(2);
+    expect(screen.getAllByRole('link')).toHaveLength(3);
   });
 });
