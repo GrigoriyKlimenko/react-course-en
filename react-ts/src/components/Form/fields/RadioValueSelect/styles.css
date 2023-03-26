@@ -1,0 +1,7 @@
+.field {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #cccccc;
+    gap: 5px;
+}

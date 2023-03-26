@@ -1,0 +1,24 @@
+.field {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #cccccc;
+    gap: 5px;
+}
+
+input.input,
+input.error {
+    font-size: 16px;
+    box-sizing: border-box;
+    height: 30px;
+    border: 2px solid #5b5b5b;
+    border-radius: 5px;
+}
+
+input.error {
+    border-color: #f00;
+}
+
+input[type='file'] {
+    border: none;
+}
