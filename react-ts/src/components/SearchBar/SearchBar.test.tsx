@@ -23,7 +23,6 @@ describe('Search component', () => {
     fireEvent.change(getByPlaceholderText('Search...'), {
       target: { value: testValue },
     });
-    // expect(getByText('Input has changed')).toBeInTheDocument();
     expect(screen.getByRole('textbox')).toHaveValue(testValue);
   });
 });
