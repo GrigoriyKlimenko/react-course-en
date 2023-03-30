@@ -1,10 +1,7 @@
-import React from 'react';
 import { CommonPage } from '@pages/CommonPage';
 
-class App extends React.Component {
-  render() {
-    return <CommonPage />;
-  }
-}
+const App = () => {
+  return <CommonPage />;
+};
 
 export default App;

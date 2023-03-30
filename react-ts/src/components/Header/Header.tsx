@@ -1,33 +1,35 @@
-import React from 'react';
-import './styles.css';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { ROUTES_ITEMS } from '@data/routesItems';
+import './styles.css';
 
-type HeaderProps = {
-  currentPageTitle: string;
-};
+export const Header = () => {
+  const [currentPage, setCurrentPage] = useState('');
+  const location = useLocation();
 
-export class Header extends React.Component<HeaderProps> {
-  render() {
-    return (
-      <div className="header">
-        <h3>{this.props.currentPageTitle}</h3>
-        <nav className="navigation">
-          {ROUTES_ITEMS.filter((item) => item.displayInMenu).map((item) => (
-            <NavLink
-              className={
-                item.title === this.props.currentPageTitle
-                  ? 'selected'
-                  : 'navItem'
-              }
-              key={item.title}
-              to={item.path}
-            >
-              {item.title}
-            </NavLink>
-          ))}
-        </nav>
-      </div>
+  useEffect(() => {
+    const currentRoute = ROUTES_ITEMS.find(
+      (route) => route.path === location.pathname
     );
-  }
-}
+    if (currentRoute) {
+      setCurrentPage(currentRoute.title);
+    }
+  }, [location.pathname]);
+
+  return (
+    <div className="header">
+      <h3>{currentPage}</h3>
+      <nav className="navigation">
+        {ROUTES_ITEMS.filter((route) => route.displayInMenu).map((route) => (
+          <NavLink
+            className={route.title === currentPage ? 'selected' : 'navItem'}
+            key={route.title}
+            to={route.path}
+          >
+            {route.title}
+          </NavLink>
+        ))}
+      </nav>
+    </div>
+  );
+};

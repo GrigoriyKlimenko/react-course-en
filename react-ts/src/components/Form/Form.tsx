@@ -1,4 +1,4 @@
-import React, { createRef, FormEvent } from 'react';
+import { createRef, FormEvent, useState } from 'react';
 import { RadioValueSelect } from '@components/Form/fields/RadioValueSelect/RadioValueSelect';
 import { OptionValueSelect } from '@components/Form/fields/OptionValueSelect';
 import { Confirmation } from '@components/Form/fields/Confirmation';
@@ -12,21 +12,21 @@ type Props = {
   addCard: (value: CardType) => void;
 };
 
-export class Form extends React.Component<Props> {
-  firstNameRef = createRef<HTMLInputElement>();
-  lastNameRef = createRef<HTMLInputElement>();
-  cityRef = createRef<HTMLInputElement>();
-  birthdayRef = createRef<HTMLInputElement>();
-  genderRefArray = [
+export const Form = ({ addCard }: Props) => {
+  const firstNameRef = createRef<HTMLInputElement>();
+  const lastNameRef = createRef<HTMLInputElement>();
+  const cityRef = createRef<HTMLInputElement>();
+  const birthdayRef = createRef<HTMLInputElement>();
+  const genderRefArray = [
     createRef<HTMLInputElement>(),
     createRef<HTMLInputElement>(),
   ];
-  racingClassRef = createRef<HTMLSelectElement>();
-  imageRef = createRef<HTMLInputElement>();
-  confirmRef = createRef<HTMLInputElement>();
-  formRef = createRef<HTMLFormElement>();
+  const racingClassRef = createRef<HTMLSelectElement>();
+  const imageRef = createRef<HTMLInputElement>();
+  const confirmRef = createRef<HTMLInputElement>();
+  const formRef = createRef<HTMLFormElement>();
 
-  initialValidation = {
+  const initialValidation = {
     firstName: '',
     lastName: '',
     city: '',
@@ -36,32 +36,29 @@ export class Form extends React.Component<Props> {
     image: '',
     confirm: '',
   };
+  const [validationErrors, setValidationErrors] = useState(initialValidation);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  state = {
-    validationErrors: this.initialValidation,
-    isAlertOpen: false,
+  const closeAlert = () => {
+    setIsAlertOpen(false);
   };
 
-  closeAlert = () => {
-    this.setState({ isAlertOpen: false });
-  };
-
-  handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const values = {
-      firstName: this.firstNameRef.current?.value || '',
-      lastName: this.lastNameRef.current?.value || '',
-      city: this.cityRef.current?.value || '',
-      birthday: this.birthdayRef.current?.value || '',
+      firstName: firstNameRef.current?.value || '',
+      lastName: lastNameRef.current?.value || '',
+      city: cityRef.current?.value || '',
+      birthday: birthdayRef.current?.value || '',
       gender:
-        this.genderRefArray.find((item) => item.current?.checked)?.current
-          ?.value || '',
-      racingClass: this.racingClassRef.current?.value || '',
-      image: this.imageRef.current?.value || '',
-      confirm: this.confirmRef.current?.checked || false,
+        genderRefArray.find((item) => item.current?.checked)?.current?.value ||
+        '',
+      racingClass: racingClassRef.current?.value || '',
+      image: imageRef.current?.value || '',
+      confirm: confirmRef.current?.checked || false,
     };
-    const validationResult = validateForm(this.initialValidation, values);
-    this.setState({ validationErrors: validationResult });
+    const validationResult = validateForm(initialValidation, values);
+    setValidationErrors(validationResult);
     const {
       firstName,
       lastName,
@@ -84,97 +81,91 @@ export class Form extends React.Component<Props> {
         confirm
       )
     ) {
-      this.props.addCard({
+      addCard({
         id: 'id' + Date.now(),
         name: `${values.firstName} ${values.lastName}`,
-        image: this.imageRef.current?.files
-          ? URL.createObjectURL(this.imageRef.current?.files[0])
+        image: imageRef.current?.files
+          ? URL.createObjectURL(imageRef.current?.files[0])
           : '',
         date: values.birthday,
         gender: values.gender,
         raceClass: values.racingClass,
         city: values.city,
       });
-      this.formRef.current?.reset();
-      this.setState({ isAlertOpen: true });
+      formRef.current?.reset();
+      setIsAlertOpen(true);
     }
   };
 
-  render() {
-    return (
-      <>
-        <form
-          className="formContainer"
-          ref={this.formRef}
-          onSubmit={this.handleSubmit}
-        >
-          <SingleValueInput
-            type="text"
-            name="First name"
-            reference={this.firstNameRef}
-            validationErrorMessage={this.state.validationErrors.firstName}
-          />
-          <SingleValueInput
-            type="text"
-            name="Second name"
-            reference={this.lastNameRef}
-            validationErrorMessage={this.state.validationErrors.lastName}
-          />
-          <SingleValueInput
-            type="text"
-            name="City"
-            reference={this.cityRef}
-            validationErrorMessage={this.state.validationErrors.city}
-          />
-          <SingleValueInput
-            type="date"
-            name="Date of birth"
-            reference={this.birthdayRef}
-            validationErrorMessage={this.state.validationErrors.birthday}
-          />
-          <RadioValueSelect
-            name="Gender"
-            options={[
-              {
-                id: 'male',
-                title: 'Male',
-              },
-              {
-                id: 'female',
-                title: 'Female',
-              },
-            ]}
-            referenceArray={this.genderRefArray}
-            validationErrorMessage={this.state.validationErrors.gender}
-          />
-          <OptionValueSelect
-            name="Race class"
-            options={[
-              { title: 'None', value: '' },
-              { title: 'Drag racing', value: 'Drag racing' },
-              { title: 'Drift racing', value: 'Drift racing' },
-              { title: 'Ring racing', value: 'Ring racing' },
-              { title: 'Cross country racing', value: 'Cross country racing' },
-            ]}
-            reference={this.racingClassRef}
-            validationErrorMessage={this.state.validationErrors.racingClass}
-          />
-          <SingleValueInput
-            type="file"
-            name="Your photo"
-            typeAccept="image/*"
-            reference={this.imageRef}
-            validationErrorMessage={this.state.validationErrors.image}
-          />
-          <Confirmation
-            label="I have read the rules"
-            reference={this.confirmRef}
-            validationErrorMessage={this.state.validationErrors.confirm}
-          />
-          <input className="submitButton" type="submit" value="Submit" />
-        </form>
-        {this.state.isAlertOpen && <Alert handleClose={this.closeAlert} />}
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <form className="formContainer" ref={formRef} onSubmit={handleSubmit}>
+        <SingleValueInput
+          type="text"
+          name="First name"
+          reference={firstNameRef}
+          validationErrorMessage={validationErrors.firstName}
+        />
+        <SingleValueInput
+          type="text"
+          name="Second name"
+          reference={lastNameRef}
+          validationErrorMessage={validationErrors.lastName}
+        />
+        <SingleValueInput
+          type="text"
+          name="City"
+          reference={cityRef}
+          validationErrorMessage={validationErrors.city}
+        />
+        <SingleValueInput
+          type="date"
+          name="Date of birth"
+          reference={birthdayRef}
+          validationErrorMessage={validationErrors.birthday}
+        />
+        <RadioValueSelect
+          name="Gender"
+          options={[
+            {
+              id: 'male',
+              title: 'Male',
+            },
+            {
+              id: 'female',
+              title: 'Female',
+            },
+          ]}
+          referenceArray={genderRefArray}
+          validationErrorMessage={validationErrors.gender}
+        />
+        <OptionValueSelect
+          name="Race class"
+          options={[
+            { title: 'None', value: '' },
+            { title: 'Drag racing', value: 'Drag racing' },
+            { title: 'Drift racing', value: 'Drift racing' },
+            { title: 'Ring racing', value: 'Ring racing' },
+            { title: 'Cross country racing', value: 'Cross country racing' },
+          ]}
+          reference={racingClassRef}
+          validationErrorMessage={validationErrors.racingClass}
+        />
+        <SingleValueInput
+          type="file"
+          name="Your photo"
+          typeAccept="image/*"
+          reference={imageRef}
+          validationErrorMessage={validationErrors.image}
+        />
+        <Confirmation
+          label="I have read the rules"
+          reference={confirmRef}
+          validationErrorMessage={validationErrors.confirm}
+        />
+        <input className="submitButton" type="submit" value="Submit" />
+      </form>
+      {isAlertOpen && <Alert handleClose={closeAlert} />}
+    </>
+  );
+};

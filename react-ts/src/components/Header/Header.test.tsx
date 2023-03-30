@@ -7,8 +7,8 @@ import { MemoryRouter } from 'react-router-dom';
 describe('Header component', () => {
   it('Renders header component for Home page', () => {
     render(
-      <MemoryRouter>
-        <Header currentPageTitle="Home" />
+      <MemoryRouter initialEntries={['/']}>
+        <Header />
       </MemoryRouter>
     );
     expect(
@@ -20,8 +20,8 @@ describe('Header component', () => {
   });
   it('Renders header component for About us page', () => {
     render(
-      <MemoryRouter>
-        <Header currentPageTitle="About us" />
+      <MemoryRouter initialEntries={['/about']}>
+        <Header />
       </MemoryRouter>
     );
     expect(
@@ -33,8 +33,8 @@ describe('Header component', () => {
   });
   it('Renders header component for Error page', () => {
     render(
-      <MemoryRouter>
-        <Header currentPageTitle="Error" />
+      <MemoryRouter initialEntries={['/404']}>
+        <Header />
       </MemoryRouter>
     );
     expect(
