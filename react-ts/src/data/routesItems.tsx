@@ -2,6 +2,7 @@ import { AboutUs } from '@pages/AboutUs';
 import { Error } from '@pages/Error';
 import { Home } from '@pages/Home';
 import { Registration } from '@pages/Registration';
+import { Navigate } from 'react-router-dom';
 
 export const ROUTES_ITEMS = [
   {
@@ -17,15 +18,21 @@ export const ROUTES_ITEMS = [
     displayInMenu: true,
   },
   {
-    title: 'About as',
+    title: 'About us',
     path: '/about',
     component: <AboutUs />,
     displayInMenu: true,
   },
   {
     title: 'Error',
-    path: '*',
+    path: '/404',
     component: <Error />,
+    displayInMenu: false,
+  },
+  {
+    title: 'Error',
+    path: '*',
+    component: <Navigate to="/404" replace />,
     displayInMenu: false,
   },
 ];

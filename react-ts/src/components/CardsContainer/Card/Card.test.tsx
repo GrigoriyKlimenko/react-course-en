@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 
 import { Card } from './Card';
 import image from '@assets/no-image.jpg';
-import React from 'react';
 
 const TEST_DATA = {
   id: 'id12',
@@ -28,7 +27,7 @@ describe('Card component', () => {
       screen.getByText(`Date of birth: ${TEST_DATA.date}`)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(`Race classes: ${TEST_DATA.raceClass}`)
+      screen.getByText(`Race class: ${TEST_DATA.raceClass}`)
     ).toBeInTheDocument();
   });
 });
