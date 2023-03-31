@@ -1,34 +1,29 @@
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { ValidationError } from '@components/Form/validation/ValidationError';
 import { FormValues, FormValuesKeys } from '@components/Form';
-import { raceClassInputRule } from '@components/Form/validation';
-import './styles.css';
+import { imageInputRule } from '@components/Form/validation';
 
 type Props = {
   label: string;
   name: FormValuesKeys;
-  options: { title: string; value: string }[];
+  typeAccept: string;
   register: UseFormRegister<FormValues>;
   errors: FieldErrors<FormValues>;
 };
 
-export const OptionValueSelect = (props: Props) => {
-  const { label, name, options, register, errors } = props;
+export const ImageInput = (props: Props) => {
+  const { label, name, typeAccept, register, errors } = props;
   const validationErrorMessage = errors?.[name]?.message || '';
 
   return (
     <div className="field">
       <label>{label}:</label>
-      <select
-        {...register(name, { ...raceClassInputRule })}
-        className={validationErrorMessage ? 'error' : 'select'}
-      >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.title}
-          </option>
-        ))}
-      </select>
+      <input
+        {...register(name, { ...imageInputRule })}
+        className={validationErrorMessage ? 'error' : 'input'}
+        accept={typeAccept}
+        type="file"
+      />
       <ValidationError errorMessage={validationErrorMessage} />
     </div>
   );

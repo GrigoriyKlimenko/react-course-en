@@ -1,34 +1,27 @@
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { ValidationError } from '@components/Form/validation/ValidationError';
 import { FormValues, FormValuesKeys } from '@components/Form';
-import { genderInputRule } from '@components/Form/validation';
-import './styles.css';
+import { birthdayInputRule } from '@components/Form/validation';
 
 type Props = {
   label: string;
-  name: FormValuesKeys;
-  options: { id: string; title: string }[];
+  name: Extract<FormValuesKeys, 'birthday'>;
   register: UseFormRegister<FormValues>;
   errors: FieldErrors<FormValues>;
 };
 
-export const RadioValueSelect = (props: Props) => {
-  const { label, name, options, register, errors } = props;
+export const DateValueInput = (props: Props) => {
+  const { label, name, register, errors } = props;
   const validationErrorMessage = errors?.[name]?.message || '';
 
   return (
     <div className="field">
       <label>{label}:</label>
-      {options.map((item) => (
-        <div key={item.id}>
-          <input
-            {...register(name, { ...genderInputRule })}
-            type="radio"
-            value={item.id}
-          />
-          <label>{item.title}</label>
-        </div>
-      ))}
+      <input
+        {...register(name, { ...birthdayInputRule })}
+        className={validationErrorMessage ? 'error' : 'input'}
+        type="date"
+      />
       <ValidationError errorMessage={validationErrorMessage} />
     </div>
   );

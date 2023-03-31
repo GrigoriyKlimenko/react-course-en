@@ -15,7 +15,7 @@ export const Card = ({ data }: CardProps) => {
         <div>City: {city}</div>
         <div>Date of birth: {date}</div>
         <div>Gender: {gender}</div>
-        <div>Race classes: {raceClass}</div>
+        <div>Race class: {raceClass}</div>
       </div>
     </div>
   );

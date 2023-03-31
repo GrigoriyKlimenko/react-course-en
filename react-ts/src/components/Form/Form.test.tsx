@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 
 import { Form } from './Form';
 
@@ -12,15 +12,16 @@ describe('Form component', () => {
     expect(screen.getByRole('checkbox')).toBeInTheDocument();
     expect(screen.getByRole('button')).toBeInTheDocument();
   });
-  it('Validation works', () => {
-    const { getByText } = render(<Form addCard={() => {}} />);
-    fireEvent(
-      getByText('Submit'),
-      new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
+  it('Validation works', async () => {
+    render(<Form addCard={() => {}} />);
+    await act(async () => {
+      fireEvent.click(screen.getByText(/Submit/i));
+    });
+    expect(
+      screen.getAllByRole('heading', {
+        level: 6,
       })
-    );
+    ).toHaveLength(8);
     expect(screen.getAllByText('Required field, fill it in')).toHaveLength(3);
     expect(screen.getByText('Choose your day of birth')).toBeInTheDocument();
     expect(screen.getByText('Choose your gender')).toBeInTheDocument();

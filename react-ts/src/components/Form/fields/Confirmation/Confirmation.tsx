@@ -1,20 +1,28 @@
-import { RefObject } from 'react';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { ValidationError } from '@components/Form/validation/ValidationError';
+import { FormValues, FormValuesKeys } from '@components/Form';
+import { confirmInputRule } from '@components/Form/validation';
 import './styles.css';
 
 type Props = {
   label: string;
-  reference: RefObject<HTMLInputElement>;
-  validationErrorMessage: string;
+  name: FormValuesKeys;
+  register: UseFormRegister<FormValues>;
+  errors: FieldErrors<FormValues>;
 };
 
 export const Confirmation = (props: Props) => {
-  const { label, reference, validationErrorMessage } = props;
+  const { label, name, register, errors } = props;
+  const validationErrorMessage = errors?.[name]?.message || '';
 
   return (
     <div>
       <div className="checkboxField">
-        <input className="checkbox" type="checkbox" ref={reference} />
+        <input
+          {...register(name, { ...confirmInputRule })}
+          className="checkbox"
+          type="checkbox"
+        />
         <label>{label}</label>
       </div>
       <ValidationError errorMessage={validationErrorMessage} />
