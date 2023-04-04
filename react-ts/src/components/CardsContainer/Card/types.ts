@@ -7,3 +7,7 @@ export type CardType = {
   raceClass: string;
   date: string;
 };
+
+export type CardProps = {
+  data: CardType;
+};
