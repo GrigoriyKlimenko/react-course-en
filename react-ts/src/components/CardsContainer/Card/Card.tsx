@@ -24,7 +24,10 @@ export const Card = ({ data }: CardProps) => {
         </div>
       </div>
       {isCardInfoModalOpen && (
-        <CardInfoModal data={data} handleClose={handleCardInfoModalClose} />
+        <CardInfoModal
+          cardId={data.id}
+          handleClose={handleCardInfoModalClose}
+        />
       )}
     </>
   );

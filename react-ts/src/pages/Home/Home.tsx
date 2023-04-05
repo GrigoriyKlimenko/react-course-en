@@ -3,6 +3,7 @@ import { CardsContainer } from '@components/CardsContainer';
 import image from '@assets/no-image.jpg';
 import { useState } from 'react';
 import { Loader } from '@components/Loader';
+import { BASE_URL } from '@data/baseUrl';
 
 const CARDS_MOCK = new Array(10).fill('').map((_, idx) => {
   return {
@@ -24,11 +25,7 @@ export const Home = () => {
   const getData = (searchValue: string) => {
     setGetDataError('');
     setIsDataLoading(true);
-    fetch(
-      `https://fake-server-beige.vercel.app/catalog?q=${encodeURIComponent(
-        searchValue
-      )}`
-    )
+    fetch(`${BASE_URL}?name_like=${encodeURIComponent(searchValue)}`)
       .then((data) => {
         if (data.ok) {
           return data.json();

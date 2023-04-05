@@ -1,8 +1,15 @@
-import { describe, it } from 'vitest';
+import { describe, it, Mock, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import App from './App';
+
+global.fetch = vi.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve(),
+  })
+) as Mock;
+
 describe('App', () => {
   it('Renders home page', () => {
     render(
