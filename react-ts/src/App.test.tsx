@@ -6,7 +6,8 @@ import App from './App';
 
 global.fetch = vi.fn(() =>
   Promise.resolve({
-    json: () => Promise.resolve(),
+    ok: true,
+    json: () => Promise.resolve([]),
   })
 ) as Mock;
 

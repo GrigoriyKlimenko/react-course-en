@@ -4,7 +4,8 @@ import { Home } from './Home';
 
 global.fetch = vi.fn(() =>
   Promise.resolve({
-    json: () => Promise.resolve(),
+    ok: true,
+    json: () => Promise.resolve([]),
   })
 ) as Mock;
 

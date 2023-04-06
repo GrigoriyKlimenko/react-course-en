@@ -1,45 +1,23 @@
-import { CardType } from '@components/CardsContainer/Card/types';
-import './styles.css';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import useFetchData from '@/hooks/useFetchData';
 import { BASE_URL } from '@data/baseUrl';
+import { CardType } from '@components/CardsContainer/Card/types';
 import { Loader } from '@components/Loader';
+import './styles.css';
 
-type CardInfoModalProps = {
-  // data: CardType;
+type Props = {
   cardId: string;
   handleClose: () => void;
 };
 
-export const CardInfoModal = ({ cardId, handleClose }: CardInfoModalProps) => {
-  // const { name, image, date, gender, raceClass, city } = data;
-  const [data, setData] = useState({
-    name: '',
-    image: '',
-    date: '',
-    gender: '',
-    raceClass: '',
-    city: '',
-  });
-  const [getDataError, setGetDataError] = useState('');
-  const [isDataLoading, setIsDataLoading] = useState(true);
+export const CardInfoModal = ({ cardId, handleClose }: Props) => {
+  const { data, isDataLoading, gettingDataError, setReqUrl } =
+    useFetchData<CardType>('');
+
   useEffect(() => {
-    setGetDataError('');
-    // setIsDataLoading(true);
-    fetch(`${BASE_URL}/${cardId}`)
-      .then((data) => {
-        if (data.ok) {
-          return data.json();
-        }
-        throw new Error('Something wrong');
-      })
-      .then((card) => setData(card))
-      .catch((error) => {
-        setGetDataError(error);
-      })
-      .finally(() => {
-        setIsDataLoading(false);
-      });
-  }, [cardId]);
+    const oneCardReqUrl = `${BASE_URL}/${cardId}`;
+    setReqUrl(oneCardReqUrl);
+  }, [cardId, setReqUrl]);
 
   return (
     <>
@@ -53,16 +31,19 @@ export const CardInfoModal = ({ cardId, handleClose }: CardInfoModalProps) => {
                 &#10006;
               </button>
             </div>
-            <div className="modalBody">
-              <img src={data.image} alt="avatar" />
-              <div className="modalInfo">
-                <div>Full name: {data.name}</div>
-                <div>City: {data.city}</div>
-                <div>Date of birth: {data.date}</div>
-                <div>Gender: {data.gender}</div>
-                <div>Race class: {data.raceClass}</div>
+            {gettingDataError && <h3>{gettingDataError}</h3>}
+            {data && (
+              <div className="modalBody">
+                <img src={data.image} alt="avatar" />
+                <div className="modalInfo">
+                  <div>Full name: {data.name}</div>
+                  <div>City: {data.city}</div>
+                  <div>Date of birth: {data.date}</div>
+                  <div>Gender: {data.gender}</div>
+                  <div>Race class: {data.raceClass}</div>
+                </div>
               </div>
-            </div>
+            )}
             <div className="modalFooter"></div>
           </div>
         </div>

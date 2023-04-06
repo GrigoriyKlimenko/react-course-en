@@ -1,4 +1,5 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { BASE_URL } from '@data/baseUrl';
 import './styles.css';
 
 type Props = {
@@ -9,19 +10,16 @@ export const SearchBar = ({ getData }: Props) => {
   const [searchText, setSearchText] = useState(
     localStorage.getItem('searchText') || ''
   );
-  const searchTextRef = useRef('');
+  const [loadedOnce, setLoadedOnce] = useState(false);
+
+  const getSearchReqUrl = (value: string) => `${BASE_URL}?name_like=${value}`;
 
   useEffect(() => {
-    searchTextRef.current = searchText;
-  }, [searchText]);
-
-  useEffect(() => {
-    getData(searchText);
-    return () => {
-      localStorage.setItem('searchText', searchTextRef.current);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!loadedOnce) {
+      getData(getSearchReqUrl(searchText));
+      setLoadedOnce(true);
+    }
+  }, [searchText, getData, loadedOnce]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
@@ -29,13 +27,15 @@ export const SearchBar = ({ getData }: Props) => {
 
   const keyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.code === 'Enter' || event.code === 'NumpadEnter') {
-      const target = event.target as HTMLInputElement;
-      getData(target.value);
+      const { value } = event.target as HTMLInputElement;
+      localStorage.setItem('searchText', value.trim());
+      getData(getSearchReqUrl(value));
     }
   };
 
   const handleSearchClick = () => {
-    getData(searchText);
+    localStorage.setItem('searchText', searchText.trim());
+    getData(getSearchReqUrl(searchText));
   };
 
   return (

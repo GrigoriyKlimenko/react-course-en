@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import { CardProps } from './types';
+import { PartialCardType } from './types';
 import { CardInfoModal } from '@components/CardsContainer/Card/CardInfoModal';
 import './styles.css';
 
-export const Card = ({ data }: CardProps) => {
+type Props = {
+  data: PartialCardType;
+};
+
+export const Card = ({ data }: Props) => {
   const { name, image } = data;
   const [isCardInfoModalOpen, setIsCardInfoModalOpen] = useState(false);
 

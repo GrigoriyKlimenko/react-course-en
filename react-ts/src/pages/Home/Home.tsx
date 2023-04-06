@@ -1,50 +1,18 @@
+import useFetchData from '@/hooks/useFetchData';
 import { SearchBar } from '@components/SearchBar';
 import { CardsContainer } from '@components/CardsContainer';
-import image from '@assets/no-image.jpg';
-import { useState } from 'react';
+import { PartialCardType } from '@components/CardsContainer/Card/types';
 import { Loader } from '@components/Loader';
-import { BASE_URL } from '@data/baseUrl';
-
-const CARDS_MOCK = new Array(10).fill('').map((_, idx) => {
-  return {
-    id: 'id' + idx,
-    image: image,
-    name: 'Michael Schumacher',
-    gender: 'male',
-    city: 'Hürth',
-    date: '03-01-1969',
-    raceClass: 'Pro',
-  };
-});
 
 export const Home = () => {
-  const [data, setData] = useState([]);
-  const [getDataError, setGetDataError] = useState('');
-  const [isDataLoading, setIsDataLoading] = useState(false);
-
-  const getData = (searchValue: string) => {
-    setGetDataError('');
-    setIsDataLoading(true);
-    fetch(`${BASE_URL}?name_like=${encodeURIComponent(searchValue)}`)
-      .then((data) => {
-        if (data.ok) {
-          return data.json();
-        }
-        throw new Error('Something wrong');
-      })
-      .then((cards) => setData(cards))
-      .catch((error) => {
-        setGetDataError(error);
-      })
-      .finally(() => {
-        setIsDataLoading(false);
-      });
-  };
+  const { data, isDataLoading, gettingDataError, setReqUrl } =
+    useFetchData<PartialCardType[]>('');
 
   return (
     <>
       <h1>Home</h1>
-      <SearchBar getData={getData} />
+      <SearchBar getData={setReqUrl} />
+      {gettingDataError && <h3>{gettingDataError}</h3>}
       {isDataLoading && <Loader />}
       <CardsContainer cards={data} />
     </>

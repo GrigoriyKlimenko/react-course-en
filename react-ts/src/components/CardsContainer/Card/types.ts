@@ -8,6 +8,4 @@ export type CardType = {
   date: string;
 };
 
-export type CardProps = {
-  data: CardType;
-};
+export type PartialCardType = Pick<CardType, 'id' | 'name' | 'image'>;
