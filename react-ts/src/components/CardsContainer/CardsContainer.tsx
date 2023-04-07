@@ -1,17 +1,18 @@
 import { Card } from './Card';
-import { CardType } from './Card/types';
+import { PartialCardType } from './Card/types';
 import './styles.css';
 
-type CardsContainerProps = {
-  cards: CardType[];
+type Props = {
+  cards: PartialCardType[] | null;
 };
 
-export const CardsContainer = ({ cards }: CardsContainerProps) => {
+export const CardsContainer = ({ cards }: Props) => {
   return (
     <div className="cardsContainer">
-      {cards.map((card: CardType) => (
-        <Card key={card.id} data={card} />
-      ))}
+      {cards &&
+        cards.map((card: PartialCardType) => (
+          <Card key={card.id} data={card} />
+        ))}
     </div>
   );
 };

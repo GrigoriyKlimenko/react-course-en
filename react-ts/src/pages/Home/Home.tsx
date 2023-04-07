@@ -1,25 +1,20 @@
+import useFetchData from '@/hooks/useFetchData';
 import { SearchBar } from '@components/SearchBar';
 import { CardsContainer } from '@components/CardsContainer';
-import image from '@assets/no-image.jpg';
-
-const CARDS_MOCK = new Array(10).fill('').map((_, idx) => {
-  return {
-    id: 'id' + idx,
-    image: image,
-    name: 'Michael Schumacher',
-    gender: 'male',
-    city: 'Hürth',
-    date: '03-01-1969',
-    raceClass: 'Pro',
-  };
-});
+import { PartialCardType } from '@components/CardsContainer/Card/types';
+import { Loader } from '@components/Loader';
 
 export const Home = () => {
+  const { data, isDataLoading, gettingDataError, setReqUrl } =
+    useFetchData<PartialCardType[]>('');
+
   return (
     <>
       <h1>Home</h1>
-      <SearchBar />
-      <CardsContainer cards={CARDS_MOCK} />
+      <SearchBar getData={setReqUrl} />
+      {gettingDataError && <h3>{gettingDataError}</h3>}
+      {isDataLoading && <Loader />}
+      <CardsContainer cards={data} />
     </>
   );
 };

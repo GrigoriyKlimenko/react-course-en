@@ -7,3 +7,5 @@ export type CardType = {
   raceClass: string;
   date: string;
 };
+
+export type PartialCardType = Pick<CardType, 'id' | 'name' | 'image'>;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Form } from '@components/Form';
-import { CardsContainer } from '@components/CardsContainer';
+import { FormCard } from '@components/Form/FormCard';
 import { CardType } from '@components/CardsContainer/Card/types';
 import './styles.css';
 
@@ -17,7 +17,12 @@ export const Registration = () => {
       <div className="registrationContainer">
         <Form addCard={addCard} />
         {cards.length > 0 && <h2>Submitted cards:</h2>}
-        <CardsContainer cards={cards} />
+        <div className="cardsContainer">
+          {cards &&
+            cards.map((card: CardType) => (
+              <FormCard key={card.id} data={card} />
+            ))}
+        </div>
       </div>
     </>
   );

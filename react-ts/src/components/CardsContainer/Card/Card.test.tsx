@@ -21,13 +21,13 @@ describe('Card component', () => {
     expect(
       screen.getByText(`Full name: ${TEST_DATA.name}`)
     ).toBeInTheDocument();
-    expect(screen.getByText(`Gender: ${TEST_DATA.gender}`)).toBeInTheDocument();
-    expect(screen.getByText(`City: ${TEST_DATA.city}`)).toBeInTheDocument();
-    expect(
-      screen.getByText(`Date of birth: ${TEST_DATA.date}`)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(`Race class: ${TEST_DATA.raceClass}`)
-    ).toBeInTheDocument();
+    // expect(screen.getByText(`Gender: ${TEST_DATA.gender}`)).toBeInTheDocument();
+    // expect(screen.getByText(`City: ${TEST_DATA.city}`)).toBeInTheDocument();
+    // expect(
+    //   screen.getByText(`Date of birth: ${TEST_DATA.date}`)
+    // ).toBeInTheDocument();
+    // expect(
+    //   screen.getByText(`Race class: ${TEST_DATA.raceClass}`)
+    // ).toBeInTheDocument();
   });
 });
