@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { BASE_URL } from '@data/baseUrl';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { cardsHomeSlice } from '@/store/reducers/CardsHomeSlice';
 import './styles.css';
 
 type Props = {
@@ -7,9 +9,9 @@ type Props = {
 };
 
 export const SearchBar = ({ getData }: Props) => {
-  const [searchText, setSearchText] = useState(
-    localStorage.getItem('searchText') || ''
-  );
+  const { searchText } = useAppSelector((state) => state.cardsHomeReducer);
+  const { saveSearchText } = cardsHomeSlice.actions;
+  const dispatch = useAppDispatch();
   const [loadedOnce, setLoadedOnce] = useState(false);
 
   const getSearchReqUrl = (value: string) => `${BASE_URL}?name_like=${value}`;
@@ -22,19 +24,19 @@ export const SearchBar = ({ getData }: Props) => {
   }, [searchText, getData, loadedOnce]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
+    dispatch(saveSearchText(e.target.value));
   };
 
   const keyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.code === 'Enter' || event.code === 'NumpadEnter') {
       const { value } = event.target as HTMLInputElement;
-      localStorage.setItem('searchText', value.trim());
+      dispatch(saveSearchText(value));
       getData(getSearchReqUrl(value));
     }
   };
 
   const handleSearchClick = () => {
-    localStorage.setItem('searchText', searchText.trim());
+    dispatch(saveSearchText(searchText));
     getData(getSearchReqUrl(searchText));
   };
 
