@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import cardsHomeReducer from './reducers/CardsHomeSlice';
+import cardsFormReducer from './reducers/CardsFormSlice';
 
 const rootReducer = combineReducers({
   cardsHomeReducer,
+  cardsFormReducer,
 });
 
 export const setupStore = () => {
