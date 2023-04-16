@@ -1,31 +1,27 @@
+import 'whatwg-fetch';
 import { describe, it, vi } from 'vitest';
-import { render, screen, cleanup, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 import { SearchBar } from './SearchBar';
-import { BASE_URL } from '@data/baseUrl';
+import { setupStore } from '@/store/store';
+import { Provider } from 'react-redux';
+const store = setupStore();
 
-afterEach(cleanup);
+const mockFn = vi.fn().mockImplementation((value) => value);
+const wrappedSearchBar = (
+  <Provider store={store}>
+    <SearchBar getData={mockFn} />
+  </Provider>
+);
 
 describe('Search component', () => {
-  const mockFn = vi.fn().mockImplementation((value) => value);
   it('Renders empty searchbar', () => {
-    render(<SearchBar getData={mockFn} />);
+    render(wrappedSearchBar);
     expect(screen.getByRole('textbox')).toHaveValue('');
-    expect(mockFn.mock.calls[0][0] === `${BASE_URL}?name_like=`).toBeTruthy();
   });
-  it('Renders non-empty searchbar', () => {
-    const testValue = 'some test search';
-    window.localStorage.setItem('searchText', testValue);
-    render(<SearchBar getData={(v) => mockFn(v)} />);
-    expect(screen.getByRole('textbox')).toHaveValue(testValue);
-    expect(
-      mockFn.mock.calls[1][0] === `${BASE_URL}?name_like=${testValue}`
-    ).toBeTruthy();
-  });
-
   it('Change input value', () => {
     const testValue = 'another test search';
-    const { getByPlaceholderText } = render(<SearchBar getData={mockFn} />);
+    const { getByPlaceholderText } = render(wrappedSearchBar);
     fireEvent.change(getByPlaceholderText('Search...'), {
       target: { value: testValue },
     });

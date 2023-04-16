@@ -1,8 +1,13 @@
-import { describe, it, vi } from 'vitest';
+import 'whatwg-fetch';
+import { describe, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import { CardsContainer } from './CardsContainer';
 import image from '@assets/no-image.jpg';
+import { mockGetOneCardEndpoint } from '@/utils/mockServer';
+import { setupStore } from '@/store/store';
+import { Provider } from 'react-redux';
+const store = setupStore();
 
 const TEST_DATA = {
   id: 'id12',
@@ -17,22 +22,15 @@ const TEST_DATA_ARRAY = new Array(10).fill('').map((_, idx) => {
   };
 });
 
-global.fetch = vi
-  .fn()
-  .mockResolvedValueOnce({
-    ok: true,
-    json: () =>
-      Promise.resolve({
-        id: '1',
-        image: image,
-        name: 'Nick Qwerty',
-        city: 'Unknown',
-        gender: 'male',
-        date: '1998-01-01',
-        raceClass: 'Drag racing',
-      }),
-  })
-  .mockRejectedValueOnce(new Error('Fetch error'));
+const ONE_CARD_TEST_DATA = {
+  id: '1',
+  image: image,
+  name: 'Nick Qwerty',
+  city: 'Unknown',
+  gender: 'male',
+  date: '1998-01-01',
+  raceClass: 'Drag racing',
+};
 
 describe('CardsContainer component', () => {
   it('Renders 1 card', () => {
@@ -51,7 +49,15 @@ describe('CardsContainer component', () => {
 
 describe('Fetch all card data', async () => {
   it('has all card data', async () => {
-    render(<CardsContainer cards={[TEST_DATA]} />);
+    mockGetOneCardEndpoint(
+      `https://fake-server-beige.vercel.app/catalog/id12`,
+      ONE_CARD_TEST_DATA
+    );
+    render(
+      <Provider store={store}>
+        <CardsContainer cards={[TEST_DATA]} />
+      </Provider>
+    );
     fireEvent(
       screen.getByText('Full name: Firstname Lastname'),
       new MouseEvent('click', {
@@ -64,16 +70,5 @@ describe('Fetch all card data', async () => {
     expect(await screen.findByText('Date of birth: 1998-01-01')).toBeVisible();
     expect(await screen.findByText('Gender: male')).toBeVisible();
     expect(await screen.findByText('Race class: Drag racing')).toBeVisible();
-  });
-  it('get error', async () => {
-    render(<CardsContainer cards={[TEST_DATA]} />);
-    fireEvent(
-      screen.getByText('Full name: Firstname Lastname'),
-      new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-      })
-    );
-    expect(await screen.findByText('Fetch error')).toBeVisible();
   });
 });

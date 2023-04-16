@@ -1,25 +1,26 @@
-import { describe, it, Mock, vi } from 'vitest';
+import 'whatwg-fetch';
+import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import App from './App';
-
-global.fetch = vi.fn(() =>
-  Promise.resolve({
-    ok: true,
-    json: () => Promise.resolve([]),
-  })
-) as Mock;
+import { mockGetAllCardsEndpoint } from '@/utils/mockServer';
+import { setupStore } from '@/store/store';
+import { Provider } from 'react-redux';
+const store = setupStore();
 
 describe('App', () => {
-  it('Renders home page', () => {
+  it('Renders home page', async () => {
+    mockGetAllCardsEndpoint('', []);
     render(
       <MemoryRouter initialEntries={['/']}>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </MemoryRouter>
     );
     expect(
-      screen.getByRole('heading', {
+      await screen.getByRole('heading', {
         level: 1,
       })
     ).toHaveTextContent('Home');

@@ -1,3 +1,4 @@
+import 'whatwg-fetch';
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 

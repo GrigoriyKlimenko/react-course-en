@@ -19,7 +19,7 @@ export const cardsAPI = createApi({
     }),
     fetchCardInfo: build.query<CardType, string>({
       query: (id = '') => ({
-        url: `/catalhog/${id}`,
+        url: `/catalog/${id}`,
       }),
     }),
   }),
