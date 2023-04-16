@@ -3,7 +3,7 @@ import { PartialCardType } from './Card/types';
 import './styles.css';
 
 type Props = {
-  cards: PartialCardType[] | null;
+  cards: PartialCardType[] | null | undefined;
 };
 
 export const CardsContainer = ({ cards }: Props) => {

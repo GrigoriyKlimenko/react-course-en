@@ -22,10 +22,18 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: "./src/testsSetup.ts",
+    exclude: [
+      "**/public/**",
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/.{idea,git,cache,output,temp}/**",
+    ],
+
     coverage: {
       provider: "istanbul",
       enabled: true,
       all: true,
+      exclude: ["**/public/**"],
     },
   },
 });
