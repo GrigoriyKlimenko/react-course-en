@@ -1,19 +1,21 @@
-import useFetchData from '@/hooks/useFetchData';
 import { SearchBar } from '@components/SearchBar';
 import { CardsContainer } from '@components/CardsContainer';
-import { PartialCardType } from '@components/CardsContainer/Card/types';
 import { Loader } from '@components/Loader';
+import { cardsAPI } from '@/services/cardsService';
 
 export const Home = () => {
-  const { data, isDataLoading, gettingDataError, setReqUrl } =
-    useFetchData<PartialCardType[]>('');
+  const [trigger, { data, isFetching, error }] =
+    cardsAPI.useLazyFetchAllCardsQuery();
 
+  const getData = (value: string) => {
+    trigger(value, false);
+  };
   return (
     <>
       <h1>Home</h1>
-      <SearchBar getData={setReqUrl} />
-      {gettingDataError && <h3>{gettingDataError}</h3>}
-      {isDataLoading && <Loader />}
+      <SearchBar getData={getData} />
+      {error && <h3>Oops, something happened...</h3>}
+      {isFetching && <Loader />}
       <CardsContainer cards={data} />
     </>
   );

@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
-import useFetchData from '@/hooks/useFetchData';
-import { BASE_URL } from '@data/baseUrl';
-import { CardType } from '@components/CardsContainer/Card/types';
 import { Loader } from '@components/Loader';
+import { cardsAPI } from '@/services/cardsService';
 import './styles.css';
 
 type Props = {
@@ -11,18 +9,17 @@ type Props = {
 };
 
 export const CardInfoModal = ({ cardId, handleClose }: Props) => {
-  const { data, isDataLoading, gettingDataError, setReqUrl } =
-    useFetchData<CardType>('');
+  const [trigger, { data, isFetching, error }] =
+    cardsAPI.useLazyFetchCardInfoQuery();
 
   useEffect(() => {
-    const oneCardReqUrl = `${BASE_URL}/${cardId}`;
-    setReqUrl(oneCardReqUrl);
-  }, [cardId, setReqUrl]);
+    trigger(cardId, false);
+  }, [cardId, trigger]);
 
   return (
     <>
-      {isDataLoading && <Loader />}
-      {!isDataLoading && (
+      {isFetching && <Loader />}
+      {!isFetching && (
         <div className="modal" onClick={() => handleClose()}>
           <div className="modalContent" onClick={(e) => e.stopPropagation()}>
             <div className="modalHeader">
@@ -31,7 +28,7 @@ export const CardInfoModal = ({ cardId, handleClose }: Props) => {
                 &#10006;
               </button>
             </div>
-            {gettingDataError && <h3>{gettingDataError}</h3>}
+            {error && <h3>Oops, something happened...</h3>}
             {data && (
               <div className="modalBody">
                 <img src={data.image} alt="avatar" />

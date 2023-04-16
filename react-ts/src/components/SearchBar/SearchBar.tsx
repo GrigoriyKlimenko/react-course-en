@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { BASE_URL } from '@data/baseUrl';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { cardsHomeSlice } from '@/store/reducers/CardsHomeSlice';
+import { searchTextSlice } from '@/store/reducers/SearchTextSlice';
 import './styles.css';
 
 type Props = {
@@ -9,35 +8,36 @@ type Props = {
 };
 
 export const SearchBar = ({ getData }: Props) => {
-  const { searchText } = useAppSelector((state) => state.cardsHomeReducer);
-  const { saveSearchText } = cardsHomeSlice.actions;
+  const { storedSearchText } = useAppSelector(
+    (state) => state.searchTextReducer
+  );
+  const { saveSearchText } = searchTextSlice.actions;
   const dispatch = useAppDispatch();
   const [loadedOnce, setLoadedOnce] = useState(false);
-
-  const getSearchReqUrl = (value: string) => `${BASE_URL}?name_like=${value}`;
+  const [searchText, setSearchText] = useState(storedSearchText);
 
   useEffect(() => {
     if (!loadedOnce) {
-      getData(getSearchReqUrl(searchText));
+      getData(searchText);
       setLoadedOnce(true);
     }
-  }, [searchText, getData, loadedOnce]);
+  }, [searchText, loadedOnce, getData]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(saveSearchText(e.target.value));
+    setSearchText(e.target.value);
   };
 
   const keyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.code === 'Enter' || event.code === 'NumpadEnter') {
       const { value } = event.target as HTMLInputElement;
       dispatch(saveSearchText(value));
-      getData(getSearchReqUrl(value));
+      getData(value);
     }
   };
 
   const handleSearchClick = () => {
     dispatch(saveSearchText(searchText));
-    getData(getSearchReqUrl(searchText));
+    getData(searchText);
   };
 
   return (

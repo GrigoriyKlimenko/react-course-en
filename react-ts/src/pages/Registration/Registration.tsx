@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import { Form } from '@components/Form';
 import { FormCard } from '@components/Form/FormCard';
 import { CardType } from '@components/CardsContainer/Card/types';
-import './styles.css';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { cardsFormSlice } from '@/store/reducers/CardsFormSlice';
+import './styles.css';
 
 export const Registration = () => {
   const { cards } = useAppSelector((state) => state.cardsFormReducer);
