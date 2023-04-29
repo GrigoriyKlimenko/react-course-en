@@ -28,7 +28,11 @@
     "vite.config.ts",
     ".eslintrc.cjs",
     "src",
-    "server.ts"
+    "server.ts",
+    "cypress.config.ts",
+    "./node_modules/cypress",
+    "cypress/support/e2e.ts",
+    "cypress/"
   ],
   "references": [{ "path": "./tsconfig.node.json" }],
   "ts-node": {

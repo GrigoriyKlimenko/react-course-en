@@ -5,10 +5,18 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import eslint from "vite-plugin-eslint";
+import istanbul from "vite-plugin-istanbul";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), eslint()],
+  plugins: [
+    react(),
+    eslint(),
+    istanbul({
+      cypress: true,
+      requireEnv: false,
+    }),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -18,10 +26,19 @@ export default defineConfig({
       "@pages": path.resolve(__dirname, "./src/pages"),
     },
   },
+  server: {
+    // host: true,
+    // port: 5173,
+    // watch: {
+    //   ignored: ["**/coverage/**"],
+    // },
+    open: true,
+  },
   test: {
     globals: true,
     environment: "jsdom",
     setupFiles: "./src/testsSetup.ts",
+    watch: false,
     exclude: [
       "**/public/**",
       "**/node_modules/**",
