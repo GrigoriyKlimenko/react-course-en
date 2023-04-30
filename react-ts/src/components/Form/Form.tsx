@@ -103,7 +103,12 @@ export const Form = ({ addCard }: Props) => {
           name="confirm"
           {...formProps}
         />
-        <input className="submitButton" type="submit" value="Submit" />
+        <input
+          className="submitButton"
+          name="submit"
+          type="submit"
+          value="Submit"
+        />
       </form>
       {isAlertOpen && <Alert handleClose={closeAlert} />}
     </>

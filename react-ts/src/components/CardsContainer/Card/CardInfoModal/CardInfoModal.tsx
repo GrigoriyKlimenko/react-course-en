@@ -24,7 +24,11 @@ export const CardInfoModal = ({ cardId, handleClose }: Props) => {
           <div className="modalContent" onClick={(e) => e.stopPropagation()}>
             <div className="modalHeader">
               <h2 className="modalTitle">Racer info</h2>
-              <button className="closeIcon" onClick={handleClose}>
+              <button
+                aria-label="closeIcon"
+                className="closeIcon"
+                onClick={handleClose}
+              >
                 &#10006;
               </button>
             </div>

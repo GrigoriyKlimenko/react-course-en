@@ -27,11 +27,8 @@ export default defineConfig({
     },
   },
   server: {
-    // host: true,
-    // port: 5173,
-    // watch: {
-    //   ignored: ["**/coverage/**"],
-    // },
+    host: true,
+    port: 5173,
     open: true,
   },
   test: {
@@ -50,7 +47,13 @@ export default defineConfig({
       provider: "istanbul",
       enabled: true,
       all: true,
-      exclude: ["**/public/**"],
+      exclude: [
+        "src/main.tsx",
+        "**/public/**",
+        ".eslintrc.cjs",
+        "server.ts",
+        "src/.prettierrc.cjs",
+      ],
     },
   },
 });

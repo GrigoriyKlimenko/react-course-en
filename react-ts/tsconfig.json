@@ -12,7 +12,7 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "noEmit": true,
     "jsx": "react-jsx",
     "outDir": "dist",
@@ -30,6 +30,7 @@
     "src",
     "server.ts",
     "cypress.config.ts",
+    "cypress.d.ts",
     "./node_modules/cypress",
     "cypress/support/e2e.ts",
     "cypress/"
