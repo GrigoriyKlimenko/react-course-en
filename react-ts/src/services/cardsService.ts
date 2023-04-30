@@ -1,9 +1,19 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  buildCreateApi,
+  coreModule,
+  fetchBaseQuery,
+  reactHooksModule,
+} from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '@data/baseUrl';
 import {
   CardType,
   PartialCardType,
 } from '@components/CardsContainer/Card/types';
+
+const createApi = buildCreateApi(
+  coreModule(),
+  reactHooksModule({ unstable__sideEffectsInRender: true })
+);
 
 export const cardsAPI = createApi({
   reducerPath: 'cardsAPI',

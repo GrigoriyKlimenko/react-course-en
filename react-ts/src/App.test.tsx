@@ -2,6 +2,7 @@ import 'whatwg-fetch';
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import '@testing-library/jest-dom';
 
 import App from './App';
 import { mockGetAllCardsEndpoint } from '@/utils/mockServer';

@@ -6,4 +6,6 @@ expect.extend(matchers);
 
 beforeAll(() => mockServer.listen({ onUnhandledRequest: `error` }));
 afterAll(() => mockServer.close());
-afterEach(() => mockServer.resetHandlers());
+afterEach(() => {
+  mockServer.resetHandlers();
+});

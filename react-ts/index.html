@@ -7,7 +7,9 @@
     <title>React RS Course</title>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <noscript>You need to enable JavaScript to run this app!</noscript>
+    <div id="root"><!--ssr-outlet--></div>
+    <!--preload-->
+    <script type="module" src="./src/entry-client.tsx"></script>
   </body>
 </html>

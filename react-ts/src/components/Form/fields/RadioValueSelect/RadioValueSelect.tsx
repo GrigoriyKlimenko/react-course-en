@@ -24,6 +24,7 @@ export const RadioValueSelect = (props: Props) => {
           <input
             {...register(name, { ...genderInputRule })}
             type="radio"
+            name={item.id}
             value={item.id}
           />
           <label>{item.title}</label>

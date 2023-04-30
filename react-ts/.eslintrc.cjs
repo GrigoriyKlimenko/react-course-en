@@ -9,6 +9,7 @@ module.exports = {
         "plugin:@typescript-eslint/recommended",
         "prettier",
         "plugin:react-hooks/recommended",
+        'plugin:cypress/recommended',
         "plugin:prettier/recommended"
     ],
     "overrides": [

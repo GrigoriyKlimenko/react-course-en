@@ -33,4 +33,12 @@ describe('Form component', () => {
       screen.getByText('Confirm, that you have read the competition rules')
     ).toBeInTheDocument();
   });
+  it('Renders form', () => {
+    render(<Form addCard={() => {}} />);
+    expect(screen.getAllByRole('textbox')).toHaveLength(3);
+    expect(screen.getAllByRole('radio')).toHaveLength(2);
+    expect(screen.getAllByRole('option')).toHaveLength(5);
+    expect(screen.getByRole('checkbox')).toBeInTheDocument();
+    expect(screen.getByRole('button')).toBeInTheDocument();
+  });
 });
